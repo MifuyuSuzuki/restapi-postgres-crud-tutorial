@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -69,5 +70,42 @@ public class CustomerMapperTest {
         customer.setPostCode("1234567");
 
         assertEquals(1, mapper.insert(customer)); //返り値（insertした件数）が1かどうか
+    }
+
+    @DisplayName("SELECT TEST: Check if all records retrieved.")
+    @Test
+    public void testSelectAll() {
+        List<Customer> actual = mapper.selectAll();
+        assertEquals(10, actual.size());
+    }
+
+    @DisplayName("SELECT TEST: Check if a record with the same id as provided retrieved.")
+    @Test
+    public void testSelect() {
+        Customer actual = mapper.select("002");
+        assertEquals("002", actual.getId());
+        assertEquals("user002", actual.getUsername());
+        assertEquals("test.user.002@example.com", actual.getEmail());
+        assertEquals("23456789012", actual.getPhoneNumber());
+        assertEquals("2345671", actual.getPostCode());
+    }
+
+    @DisplayName("UPDATE TEST: Check if the data is updated as expected.")
+    @Test
+    public void testUpdate() {
+        Customer customer = new Customer();
+        customer.setId("002");
+        customer.setUsername("user002");
+        customer.setEmail("test.user.002@example.com");
+        customer.setPhoneNumber("23456789012");
+        customer.setPostCode("2222222");
+
+        assertEquals(1, mapper.update(customer));
+    }
+
+    @DisplayName("DELETE TEST: Check if the data is deleted as expected.")
+    @Test
+    public void testDelete() {
+        assertEquals(1, mapper.delete("002"));
     }
 }

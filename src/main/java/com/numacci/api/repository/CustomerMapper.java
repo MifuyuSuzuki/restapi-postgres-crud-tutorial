@@ -3,6 +3,8 @@ package com.numacci.api.repository;
 import com.numacci.api.dto.Customer;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface CustomerMapper {
     /**
@@ -12,6 +14,37 @@ public interface CustomerMapper {
      * @return the number of inserted records
      */
     int insert(Customer customer);
+
+    /**
+     * Select all records from database.
+     *
+     * @return all records stored in database
+     */
+    List<Customer> selectAll();
+
+    /**
+     * Retrieve a record with the same id as provided.
+     *
+     * @param id identity of customer record
+     * @return customer record which has the same id as provided
+     */
+    Customer select(String id);
+
+    /**
+     * Update an existing record.
+     *
+     * @param customer customer object having the updating contents
+     * @return the number of updated records
+     */
+    int update(Customer customer);
+
+    /**
+     * Delete a record with the same id as provided.
+     *
+     * @param id identity of customer record
+     * @return the number of deleted records
+     */
+    int delete(String id);
 }
 //このMapperをimplementsしたクラスは実装しない
 // ・・・xmlファイルにSQLを記述することで、MyBatisがよしなに処理を実行してくれる

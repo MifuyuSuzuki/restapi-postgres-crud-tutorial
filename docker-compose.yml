@@ -3,7 +3,6 @@ version: '3'
 services:
   postgres:
     image: postgres:13.1-alpine
-    container_name: postgresTutorial
     restart: always
     environment:
       TZ: "Asia/Tokyo"
